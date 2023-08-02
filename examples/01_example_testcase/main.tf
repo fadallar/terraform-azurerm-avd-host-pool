@@ -92,5 +92,5 @@ module "avdhostpool" {
   friendly_name = local.avd_host_friendly_name
   description = local.avd_host_description
   registration_expiration_date = local.registration_expiration_date
-
+  enable_private_endpoint = false
 }
