@@ -67,7 +67,7 @@ variable "maximum_sessions_allowed" {
   default     = null
   validation {
     condition     = var.maximum_sessions_allowed == null || (var.maximum_sessions_allowed >= 0 && var.maximum_sessions_allowed <= 999999)
-    error_message = "Invalid variable: maximum_sessions_allowed = ${var.maximum_sessions_allowed}. The variable should be either null or comprised between 0 and 999999."
+    error_message = "Invalid variable: maximum_sessions_allowed. The variable should be either null or comprised between 0 and 999999."
   }
 }
 
