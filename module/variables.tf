@@ -91,7 +91,7 @@ variable "personal_desktop_assignment_type" {
 variable "preferred_app_group_type" {
   type        = string
   description = "Option to specify the preferred Application Group type for the Virtual Desktop Host Pool. Valid options are None, Desktop or RailApplications. Changing this forces a new resource to be created."
-  default     = "None"
+  default     = "Desktop"
   validation {
     condition     = contains(["None", "Desktop", "RailApplications"], var.preferred_app_group_type)
     error_message = "Invalid variable: preferred_app_group_type = ${var.preferred_app_group_type}. Select valid option from list: ${join(",", ["None", "Desktop", "RailApplications"])}."
