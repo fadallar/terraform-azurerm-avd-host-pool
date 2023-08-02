@@ -23,7 +23,7 @@ locals {
   change          = "CHG666"
   owner           = "Fabrice"
   spoc            = "Fabrice"
-  tlp_colour      = "white"
+  tlp_colour      = "WHITE"
   cia_rating      = "C1I1A3"
   technical_owner = "Fabrice"
 
