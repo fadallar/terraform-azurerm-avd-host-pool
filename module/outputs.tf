@@ -20,5 +20,7 @@ output "avd_host_pool_registration_token" {
 
 output "avd_host_pool_private_endpoint_id" {
   description = "AVD Host Pool Private endpoint Id"
-  value       = azurerm_private_endpoint.this.id
+  value = {
+    for k, v in azurerm_private_endpoint.this : k => v.id
+  }
 }
