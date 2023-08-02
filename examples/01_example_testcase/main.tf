@@ -30,7 +30,7 @@ locals {
   # AVD Host Pool
   avd_host_friendly_name = "myhostpool"
   avd_host_description = "mydescription"
-  registration_expiration_date = "2024-01-01T23:40:52Z"
+  registration_expiration_date = "2023-08-05T23:40:52Z"
 }
 
 module "regions" {
@@ -99,7 +99,7 @@ module "avdhostpool" {
     {
       "day_of_week" : "Monday"
       "hour_of_day" : 23
-
+    },
     {
       "day_of_week" : "Friday"
       "hour_of_day" : 21
