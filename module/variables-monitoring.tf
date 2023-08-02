@@ -18,7 +18,7 @@ variable "diag_storage_account_id" {
 variable "diag_metric_categories" {
   description = "List of metric categories to enable in the diagnostic settings"
   type        = list(string)
-  default     = ["Requests"]
+  default     = []
 }
 variable "diag_log_categories" {
   description = "List of categories to enable in the diagnostic settings"
