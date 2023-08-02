@@ -24,7 +24,7 @@ resource "azurerm_virtual_desktop_host_pool" "this" {
     use_session_host_timezone = var.scheduled_agent_updates_use_sessiony_host_time_zone
 
     dynamic "schedule" {
-      for_each = var.schedule_agent_updates_schedules != [] ? var.schedule_agent_updates_schedules : []
+      for_each = toset(var.schedule_agent_updates_schedules != [] ? var.schedule_agent_updates_schedules : [])
       content {
         day_of_week = each.value.day_of_week
         hour_of_day = each.value.hour_of_day
