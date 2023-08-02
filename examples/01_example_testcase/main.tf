@@ -100,6 +100,11 @@ module "avdhostpool" {
       "day_of_week" : "Monday"
       "hour_of_day" : 23
 
+    },
+    {
+      "day_of_week" : "Friday"
+      "hour_of_day" : 21
+
     }
   ]
 }
