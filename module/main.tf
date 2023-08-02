@@ -26,8 +26,8 @@ resource "azurerm_virtual_desktop_host_pool" "this" {
     dynamic "schedule" {
       for_each = var.schedule_agent_updates_schedules != [] ? ["enabled"] : []
       content {
-        day_of_week = each.day_of_week.value
-        hour_of_day = each.hour_of_day.value
+        day_of_week = each["day_of_week"].value
+        hour_of_day = each["hour_of_day"].value
       }
     }
   }
