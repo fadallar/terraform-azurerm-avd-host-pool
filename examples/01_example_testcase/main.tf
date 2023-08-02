@@ -93,14 +93,13 @@ module "avdhostpool" {
   description = local.avd_host_description
   registration_expiration_date = local.registration_expiration_date
   enable_private_endpoint = false
-
+  custom_rdp_properties = "enablerdsaadauth:i:1;audiocapturemode:i:1"
   scheduled_agent_updates_enabled = true
   schedule_agent_updates_schedules = [
     {
       "day_of_week" : "Monday"
       "hour_of_day" : 23
 
-    },
     {
       "day_of_week" : "Friday"
       "hour_of_day" : 21
