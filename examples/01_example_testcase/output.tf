@@ -1,6 +1,6 @@
 # TODO: Add all outputs from outputs.tf file inside module folder
 
-output "avdhostmodule" {
+output "avdhostpool" {
   description = "Description"
-  value       = module.avdhostmodule
+  value       = module.avdhostpool
 }
