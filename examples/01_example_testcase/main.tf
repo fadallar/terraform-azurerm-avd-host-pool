@@ -89,8 +89,8 @@ module "avdhostpool" {
   diag_log_analytics_workspace_id = module.diag_log_analytics_workspace.log_analytics_workspace_id
 
   # Module Parameters
-  avd_host_friendly_name = local.avd_host_friendly_name
-  avd_host_description = local.avd_host_description
+  friendly_name = local.avd_host_friendly_name
+  description = local.avd_host_description
   registration_expiration_date = local.registration_expiration_date
 
 }
