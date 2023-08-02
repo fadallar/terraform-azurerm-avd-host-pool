@@ -65,10 +65,10 @@ variable "maximum_sessions_allowed" {
   type        = number
   description = "A valid integer value from 0 to 999999 for the maximum number of users that have concurrent sessions on a session host. Should only be set if the type of your Virtual Desktop Host Pool is Pooled."
   default     = null
-  validation {
-    condition     = var.maximum_sessions_allowed == null || (var.maximum_sessions_allowed >= 0 && var.maximum_sessions_allowed <= 999999)
-    error_message = "Invalid variable: maximum_sessions_allowed. The variable should be either null or comprised between 0 and 999999."
-  }
+  #validation {
+  #  condition     = var.maximum_sessions_allowed == null || (var.maximum_sessions_allowed >= 0 && var.maximum_sessions_allowed <= 999999)
+  #  error_message = "Invalid variable: maximum_sessions_allowed. The variable should be either null or comprised between 0 and 999999."
+  #}
 }
 
 variable "load_balancer_type" {
