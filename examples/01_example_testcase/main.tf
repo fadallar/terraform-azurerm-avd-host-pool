@@ -93,4 +93,13 @@ module "avdhostpool" {
   description = local.avd_host_description
   registration_expiration_date = local.registration_expiration_date
   enable_private_endpoint = false
+
+  scheduled_agent_updates_enabled = true
+  schedule_agent_updates_schedules = [
+    {
+      "day_of_week" : "Monday"
+      "hour_of_day" : 23
+
+    }
+  ]
 }
