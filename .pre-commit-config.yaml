@@ -1,0 +1,38 @@
+# Please see docs for installation: https://pre-commit.com/#installation
+repos:
+- repo: https://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.79.1
+  hooks:
+    - id: terraform_fmt
+      args:
+        - --args=-recursive
+        - --args=-write=true
+    - id: terraform_docs
+      args:
+        - --hook-config=--path-to-file=../README.md
+        - --args=--config=tfdocs-config.yml
+    - id: terraform_docs
+      args:
+        - --hook-config=--path-to-file=README.md
+        - --hook-config=--add-to-exiting-file=true
+        - --args=--config=tfdocs-config-examples.yml
+    - id: terraform_tfsec
+      files: ^module/
+    - id: terraform_tflint
+      args:
+        - --args=--no-module
+        - --args=--disable-rule=terraform_module_pinned_source
+        - --args=--enable-rule=terraform_documented_variables
+    - id: terraform_checkov
+      files: ^module/
+    - id: terraform_validate
+      files: ^module/
+      args:
+        - --hook-config=--retry-once-with-cleanup=true
+
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v2.3.0
+  hooks:
+    - id: check-yaml
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
