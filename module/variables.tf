@@ -58,6 +58,7 @@ variable "type" {
     condition     = contains(["Personal", "Pooled"], var.type)
     error_message = "Invalid variable: type = ${var.type}. Select valid option from list: ${join(",", ["Personal", "Pooled"])}."
   }
+  default = "Pooled"
 }
 
 variable "maximum_sessions_allowed" {
@@ -77,11 +78,12 @@ variable "load_balancer_type" {
     condition     = contains(["BreadthFirst", "DepthFirst", "Persistent"], var.load_balancer_type)
     error_message = "Invalid variable: load_balancer_type = ${var.load_balancer_type}. Select valid option from list: ${join(",", ["BreadthFirst", "DepthFirst", "Persistent"])}."
   }
+  default = "BreadthFirst"
 }
 
 variable "personal_desktop_assignment_type" {
   type        = string
-  description = " Possible values are Automatic and Direct. Automatic assignment – The service will select an available host and assign it to an user. Direct Assignment – Admin selects a specific host to assign to an user. Changing this forces a new resource to be created. personal_desktop_assignment_type is required if the type of your Virtual Desktop Host Pool is Personal"
+  description = "Possible values are Automatic and Direct. Automatic assignment – The service will select an available host and assign it to an user. Direct Assignment – Admin selects a specific host to assign to an user. Changing this forces a new resource to be created. personal_desktop_assignment_type is required if the type of your Virtual Desktop Host Pool is Personal"
   default     = "Automatic"
   validation {
     condition     = contains(["Automatic", "Direct"], var.personal_desktop_assignment_type)
