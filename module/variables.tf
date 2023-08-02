@@ -140,7 +140,7 @@ variable "schedule_agent_updates_schedules" {
   DESC
   type = list(object({
     day_of_week = string
-    hour_of_day = string
+    hour_of_day = number
   }))
 }
 
