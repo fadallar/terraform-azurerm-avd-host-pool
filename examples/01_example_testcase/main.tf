@@ -4,11 +4,11 @@
 
 # Please specify local values
 locals {
-  custom_name         = ""
-  stack               = ""
-  landing_zone_slug   = ""
-  location            = ""
-  resource_group_name = ""
+  #custom_name         = ""
+  stack               = "avdpoc"
+  landing_zone_slug   = "sbx"
+  location            = "westeurope"
+  resource_group_name = "testavdpoc"
 
   # specify extra tags value if needed
   extra_tags = {
@@ -16,28 +16,28 @@ locals {
     a    = ""
   }
 
-  # specify shared resources
-  diag_log_analytics_workspace_id = ""
-
   # specify base tagging values
-  environment     = ""
-  application     = ""
-  cost_center     = ""
-  change          = ""
-  owner           = ""
-  spoc            = ""
-  tlp_colour      = ""
-  cia_rating      = ""
-  technical_owner = ""
+  environment     = "sbx"
+  application     = "avd"
+  cost_center     = "CCT"
+  change          = "CHG666"
+  owner           = "Fabrice"
+  spoc            = "Fabrice"
+  tlp_colour      = "white"
+  cia_rating      = "C1I1A3"
+  technical_owner = "Fabrice"
+
+  # AVD Host Pool 
+  registration_expiration_date = "2024-01-01T23:40:52Z"
 }
 
 module "regions" {
-  source       = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-regions//module?ref=master"
+  source       = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-regions//module?ref=master"
   azure_region = local.location
 }
 
 module "base_tagging" {
-  source          = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-basetagging//module?ref=master"
+  source          = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-basetagging//module?ref=master"
   environment     = local.environment
   application     = local.application
   cost_center     = local.cost_center
@@ -50,7 +50,7 @@ module "base_tagging" {
 }
 
 module "resource_group" {
-  source            = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-resourcegroup//module?ref=master"
+  source            = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-resourcegroup//module?ref=master"
   stack             = local.stack
   custom_name       = local.resource_group_name
   landing_zone_slug = local.landing_zone_slug
@@ -59,10 +59,22 @@ module "resource_group" {
   location_short    = module.regions.location_short
 }
 
-# Please specify source as git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/<<ADD_MODULE_NAME>>//module?ref=master or with specific tag
-module "" {
+module "diag_log_analytics_workspace" {
+  source = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-loganalyticsworkspace//module?ref=feature/use-tf-lock-file"
+
+  landing_zone_slug   = local.landing_zone_slug
+  stack               = local.stack
+  location            = module.regions.location
+  location_short      = module.regions.location_short
+  resource_group_name = module.resource_group.resource_group_name
+  default_tags        = module.base_tagging.base_tags
+
+}
+
+# Please specify source as git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git<<ADD_MODULE_NAME>>//module?ref=master or with specific tag
+module "avdhostpool" {
   source              = "../../module"
-  custom_name         = local.custom_name
+  #custom_name         = local.custom_name
   landing_zone_slug   = local.landing_zone_slug
   stack               = local.stack
   location            = module.regions.location
@@ -72,6 +84,10 @@ module "" {
   default_tags = module.base_tagging.base_tags
   # Extra Tags
   extra_tags = local.extra_tags
-  # TODO: Add module parameters
+  diag_log_analytics_workspace_id = module.diag_log_analytics_workspace.log_analytics_workspace_id
+
+  # Module Parameters
+
+  registration_expiration_date = local.registration_expiration_date
 
 }
