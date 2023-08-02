@@ -27,8 +27,6 @@ variable "stack" {
 variable "friendly_name" {
   type        = string
   description = "A friendly name for the Virtual Desktop Host Pool."
-  default     = ""
-  # Add validation block 
 
 }
 
@@ -47,7 +45,6 @@ variable "start_vm_on_connect" {
 variable "description" {
   type        = string
   description = "A description for the Virtual Desktop Host Pool."
-  default     = ""
   # Add a validation block 
 }
 

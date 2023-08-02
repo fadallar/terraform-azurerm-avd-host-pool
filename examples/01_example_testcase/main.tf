@@ -27,7 +27,9 @@ locals {
   cia_rating      = "C1I1A3"
   technical_owner = "Fabrice"
 
-  # AVD Host Pool 
+  # AVD Host Pool
+  avd_host_friendly_name = "myhostpool"
+  avd_host_description = "mydescription"
   registration_expiration_date = "2024-01-01T23:40:52Z"
 }
 
@@ -87,7 +89,8 @@ module "avdhostpool" {
   diag_log_analytics_workspace_id = module.diag_log_analytics_workspace.log_analytics_workspace_id
 
   # Module Parameters
-
+  avd_host_friendly_name = local.avd_host_friendly_name
+  avd_host_description = local.avd_host_description
   registration_expiration_date = local.registration_expiration_date
 
 }
