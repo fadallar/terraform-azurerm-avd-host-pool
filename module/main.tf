@@ -53,8 +53,3 @@ resource "azapi_update_resource" "this" {
     azurerm_virtual_desktop_host_pool.this,
   ]
 }
-
-
-"EnabledForClientsOnly"
-"Disabled"
-"Enabled"
