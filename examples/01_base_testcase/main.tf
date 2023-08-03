@@ -1,11 +1,11 @@
 # Test case local inputs
 locals {
-  stack               = "avdhost"
-  landing_zone_slug   = "sbx"
-  location            = "westeurope"
+  stack             = "avdhost"
+  landing_zone_slug = "sbx"
+  location          = "westeurope"
 
   # extra tags value if needed
- extra_tags = {
+  extra_tags = {
     tag1 = "FirstTag",
     tag2 = "SecondTag"
   }
@@ -22,13 +22,13 @@ locals {
   technical_owner = "Fabrice"
 
   # AVD Host Pool
-  
+
   registration_expiration_date = "2023-08-05T23:40:52Z"
 
-  avd_host_friendly_name = "my friendly name"
-  avd_host_description = "my description"
-  avd_host_private_endpoint = false
-  avd_host_custom_rdp_properties = "enablerdsaadauth:i:1;audiocapturemode:i:1"
+  avd_host_friendly_name                   = "my friendly name"
+  avd_host_description                     = "my description"
+  avd_host_private_endpoint                = false
+  avd_host_custom_rdp_properties           = "enablerdsaadauth:i:1;audiocapturemode:i:1"
   avd_host_scheduled_agent_updates_enabled = true
   avd_host_schedule_agent_updates_schedules = [
     {
@@ -71,7 +71,7 @@ module "resource_group" {
 }
 
 module "diag_log_analytics_workspace" {
-  source = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-loganalyticsworkspace//module?ref=feature/use-tf-lock-file"
+  source              = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-loganalyticsworkspace//module?ref=feature/use-tf-lock-file"
   landing_zone_slug   = local.landing_zone_slug
   stack               = local.stack
   location            = module.regions.location
@@ -82,23 +82,23 @@ module "diag_log_analytics_workspace" {
 
 # Please specify source as git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git<<ADD_MODULE_NAME>>//module?ref=master or with specific tag
 module "avdhostpool" {
-  source              = "../../module"
-  landing_zone_slug   = local.landing_zone_slug
-  stack               = local.stack
-  location            = module.regions.location
-  location_short      = module.regions.location_short
-  resource_group_name = module.resource_group.resource_group_name
-  default_tags = module.base_tagging.base_tags
-  extra_tags = local.extra_tags
+  source                          = "../../module"
+  landing_zone_slug               = local.landing_zone_slug
+  stack                           = local.stack
+  location                        = module.regions.location
+  location_short                  = module.regions.location_short
+  resource_group_name             = module.resource_group.resource_group_name
+  default_tags                    = module.base_tagging.base_tags
+  extra_tags                      = local.extra_tags
   diag_log_analytics_workspace_id = module.diag_log_analytics_workspace.log_analytics_workspace_id
 
   # Module Parameters
-  
-  friendly_name = local.avd_host_friendly_name
-  description = local.avd_host_description
-  registration_expiration_date = local.registration_expiration_date
-  enable_private_endpoint = local.avd_host_private_endpoint
-  custom_rdp_properties = local.avd_host_custom_rdp_properties
-  scheduled_agent_updates_enabled = local.avd_host_scheduled_agent_updates_enabled
+
+  friendly_name                    = local.avd_host_friendly_name
+  description                      = local.avd_host_description
+  registration_expiration_date     = local.registration_expiration_date
+  enable_private_endpoint          = local.avd_host_private_endpoint
+  custom_rdp_properties            = local.avd_host_custom_rdp_properties
+  scheduled_agent_updates_enabled  = local.avd_host_scheduled_agent_updates_enabled
   schedule_agent_updates_schedules = local.avd_host_schedule_agent_updates_schedules
 }
