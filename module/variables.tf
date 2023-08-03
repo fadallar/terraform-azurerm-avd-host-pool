@@ -82,7 +82,7 @@ variable "personal_desktop_assignment_type" {
   description = "Possible values are Automatic and Direct. Automatic assignment – The service will select an available host and assign it to an user. Direct Assignment – Admin selects a specific host to assign to an user. Changing this forces a new resource to be created. personal_desktop_assignment_type is required if the type of your Virtual Desktop Host Pool is Personal"
   default     = null
   validation {
-    condition     = (
+    condition = (
       var.personal_desktop_assignment_type == null ? true : (
         contains(["Automatic", "Direct"], var.personal_desktop_assignment_type)
       )
