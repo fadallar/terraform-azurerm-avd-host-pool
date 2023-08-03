@@ -87,7 +87,7 @@ variable "personal_desktop_assignment_type" {
         contains(["Automatic", "Direct"], var.personal_desktop_assignment_type)
       )
     )
-    error_message = "Invalid variable: personal_desktop_assignment_type = ${var.personal_desktop_assignment_type}. Select valid option from list: ${join(",", ["Automatic", "Direct"])}."
+    error_message = "Invalid variable: personal_desktop_assignment_type. Valid options are null or : ${join(",", ["Automatic", "Direct"])}."
   }
 }
 
