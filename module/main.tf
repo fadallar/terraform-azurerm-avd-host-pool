@@ -21,7 +21,7 @@ resource "azurerm_virtual_desktop_host_pool" "this" {
   scheduled_agent_updates {
     enabled                   = var.scheduled_agent_updates_enabled
     timezone                  = var.scheduled_agent_updates_timezone
-    use_session_host_timezone = var.scheduled_agent_updates_use_sessiony_host_time_zone
+    use_session_host_timezone = var.scheduled_agent_updates_use_session_host_time_zone
 
     dynamic "schedule" {
       for_each = var.schedule_agent_updates_schedules

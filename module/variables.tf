@@ -1,3 +1,4 @@
+
 variable "resource_group_name" {
   description = "Name of the resource group."
   type        = string
@@ -22,12 +23,10 @@ variable "stack" {
   }
 }
 
-#######
-
 variable "friendly_name" {
   type        = string
   description = "A friendly name for the Virtual Desktop Host Pool."
-
+  ### TO-DO add Validation Block
 }
 
 variable "validate_environment" {
@@ -45,7 +44,7 @@ variable "start_vm_on_connect" {
 variable "description" {
   type        = string
   description = "A description for the Virtual Desktop Host Pool."
-  # Add a validation block 
+  ### TO-DO add Validation Block
 }
 
 variable "type" {
@@ -61,11 +60,11 @@ variable "type" {
 variable "maximum_sessions_allowed" {
   type        = number
   description = "A valid integer value from 0 to 999999 for the maximum number of users that have concurrent sessions on a session host. Should only be set if the type of your Virtual Desktop Host Pool is Pooled."
-  default     = null
-  #validation {
-  #  condition     = var.maximum_sessions_allowed == null || (var.maximum_sessions_allowed >= 0 && var.maximum_sessions_allowed <= 999999)
-  #  error_message = "Invalid variable: maximum_sessions_allowed. The variable should be either null or comprised between 0 and 999999."
-  #}
+  default     = 999999
+  validation {
+    condition     = (var.maximum_sessions_allowed >= 0 && var.maximum_sessions_allowed <= 999999)
+    error_message = "Invalid variable: maximum_sessions_allowed. The variable should be Scomprised between 0 and 999999."
+  }
 }
 
 variable "load_balancer_type" {
@@ -81,9 +80,13 @@ variable "load_balancer_type" {
 variable "personal_desktop_assignment_type" {
   type        = string
   description = "Possible values are Automatic and Direct. Automatic assignment – The service will select an available host and assign it to an user. Direct Assignment – Admin selects a specific host to assign to an user. Changing this forces a new resource to be created. personal_desktop_assignment_type is required if the type of your Virtual Desktop Host Pool is Personal"
-  default     = "Automatic"
+  default     = null
   validation {
-    condition     = contains(["Automatic", "Direct"], var.personal_desktop_assignment_type)
+    condition     = (
+      var.personal_desktop_assignment_type == null ? true : (
+        contains(["Automatic", "Direct"], var.personal_desktop_assignment_type)
+      )
+    )
     error_message = "Invalid variable: personal_desktop_assignment_type = ${var.personal_desktop_assignment_type}. Select valid option from list: ${join(",", ["Automatic", "Direct"])}."
   }
 }
@@ -124,7 +127,7 @@ variable "scheduled_agent_updates_timezone" {
   default     = "UTC"
 }
 
-variable "scheduled_agent_updates_use_sessiony_host_time_zone" {
+variable "scheduled_agent_updates_use_session_host_time_zone" {
   type        = bool
   default     = false
   description = "Specifies whether scheduled agent updates should be applied based on the timezone of the affected session host. If configured then this setting overrides timezone."
@@ -147,14 +150,4 @@ variable "schedule_agent_updates_schedules" {
 variable "registration_expiration_date" {
   description = "A valid RFC3339Time for the expiration of the token. example '2022-01-01T23:40:52Z'"
   type        = string
-}
-
-variable "public_network_access" {
-  description = "Define the public network access behaviour. Possible values are Enabled, EnabledForClientsOnly ,Disabled"
-  type = string
-  default = "Enabled"
-  validation {
-      condition =  contains(["EnabledForClientsOnly","Disabled","Enabled"], var.public_network_access)
-       error_message = "Invalid variable: public_network_access = ${var.public_network_access}. Select valid option from list: ${join(",", ["EnabledForClientsOnly","Disabled","Enabled"])}."
-  }
 }
