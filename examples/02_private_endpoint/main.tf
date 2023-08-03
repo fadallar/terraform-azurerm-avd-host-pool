@@ -33,8 +33,8 @@ locals {
   subnet_private_endpoint       = ["10.0.2.0/24"]
 
   # AVD Host Pool
-  avd_host_friendly_name = "myhostpool"
-  avd_host_description = "mydescription"
+  avd_host_friendly_name       = "myhostpool"
+  avd_host_description         = "mydescription"
   registration_expiration_date = "2023-08-05T23:40:52Z"
 }
 
@@ -122,7 +122,7 @@ module "private_dns_zone_avd_host_pool" {
 
 # Please specify source as git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git<<ADD_MODULE_NAME>>//module?ref=master or with specific tag
 module "avdhostpool" {
-  source              = "../../module"
+  source = "../../module"
   #custom_name         = local.custom_name
   landing_zone_slug   = local.landing_zone_slug
   stack               = local.stack
@@ -132,18 +132,19 @@ module "avdhostpool" {
   # Default Tags
   default_tags = module.base_tagging.base_tags
   # Extra Tags
-  extra_tags = local.extra_tags
+  extra_tags                      = local.extra_tags
   diag_log_analytics_workspace_id = module.diag_log_analytics_workspace.log_analytics_workspace_id
 
   # Module Parameters
-  
+
   private_dns_zone_id        = module.private_dns_zone_avd_host_pool.id
   private_endpoint_subnet_id = module.subnet-private-endpoint.subnet_id
+  public_network_access = "Disabled"
 
-  friendly_name = local.avd_host_friendly_name
-  description = local.avd_host_description
-  registration_expiration_date = local.registration_expiration_date
-  custom_rdp_properties = "enablerdsaadauth:i:1;audiocapturemode:i:1"
+  friendly_name                   = local.avd_host_friendly_name
+  description                     = local.avd_host_description
+  registration_expiration_date    = local.registration_expiration_date
+  custom_rdp_properties           = "enablerdsaadauth:i:1;audiocapturemode:i:1"
   scheduled_agent_updates_enabled = true
   schedule_agent_updates_schedules = [
     {

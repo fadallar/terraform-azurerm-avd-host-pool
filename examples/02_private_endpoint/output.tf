@@ -3,5 +3,5 @@
 output "avdhostpool" {
   description = "Description"
   value       = module.avdhostpool
-  sensitive = true
+  sensitive   = true
 }

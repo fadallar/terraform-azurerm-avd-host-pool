@@ -37,3 +37,24 @@ resource "azurerm_virtual_desktop_host_pool_registration_info" "this" {
   hostpool_id     = azurerm_virtual_desktop_host_pool.this.id
   expiration_date = var.registration_expiration_date
 }
+
+
+resource "azapi_update_resource" "this" {
+  type        = "Microsoft.DesktopVirtualization/hostpools@2022-10-14-preview"
+  resource_id = azurerm_virtual_desktop_host_pool.this.id
+
+  body = jsonencode({
+    properties = {
+      publicNetworkAccess: var.public_network_access,
+    }
+  })
+
+  depends_on = [
+    azurerm_virtual_desktop_host_pool.this,
+  ]
+}
+
+
+"EnabledForClientsOnly"
+"Disabled"
+"Enabled"

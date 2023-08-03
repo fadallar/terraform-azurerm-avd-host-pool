@@ -147,4 +147,14 @@ variable "schedule_agent_updates_schedules" {
 variable "registration_expiration_date" {
   description = "A valid RFC3339Time for the expiration of the token. example '2022-01-01T23:40:52Z'"
   type        = string
-} 
+}
+
+variable "public_network_access" {
+  description = "Define the public network access behaviour. Possible values are Enabled, EnabledForClientsOnly ,Disabled"
+  type = string
+  default = "Enabled"
+  validation {
+      condition =  contains(["EnabledForClientsOnly","Disabled","Enabled"], var.public_network_access)
+       error_message = "Invalid variable: public_network_access = ${var.public_network_access}. Select valid option from list: ${join(",", ["EnabledForClientsOnly","Disabled","Enabled"])}."
+  }
+}
