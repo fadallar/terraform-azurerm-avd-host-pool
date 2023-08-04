@@ -32,8 +32,3 @@ resource "azurerm_virtual_desktop_host_pool" "this" {
     }
   }
 }
-
-resource "azurerm_virtual_desktop_host_pool_registration_info" "this" {
-  hostpool_id     = azurerm_virtual_desktop_host_pool.this.id
-  expiration_date = var.registration_expiration_date
-}
