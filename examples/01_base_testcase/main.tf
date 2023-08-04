@@ -93,7 +93,6 @@ module "avdhostpool_pooled" {
 
   friendly_name                    = local.avd_host_friendly_name
   description                      = local.avd_host_description
-  registration_expiration_date     = local.registration_expiration_date
   enable_private_endpoint          = local.avd_host_private_endpoint
   custom_rdp_properties            = local.avd_host_custom_rdp_properties
   scheduled_agent_updates_enabled  = local.avd_host_scheduled_agent_updates_enabled
