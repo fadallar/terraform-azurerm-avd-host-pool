@@ -111,13 +111,14 @@ module "avdhostpool_personal" {
   diag_log_analytics_workspace_id = module.diag_log_analytics_workspace.log_analytics_workspace_id
 
   # Module Parameters
-  
+
   type                             = "Personal"
   load_balancer_type               = "Persistent"
   personal_desktop_assignment_type = "Automatic"
 
   friendly_name                    = local.avd_host_friendly_name
   description                      = local.avd_host_description
+  enable_private_endpoint          = local.avd_host_private_endpoint
   custom_rdp_properties            = local.avd_host_custom_rdp_properties
   scheduled_agent_updates_enabled  = local.avd_host_scheduled_agent_updates_enabled
   schedule_agent_updates_schedules = local.avd_host_schedule_agent_updates_schedules
