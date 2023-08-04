@@ -111,11 +111,7 @@ module "avdhostpool_personal" {
   diag_log_analytics_workspace_id = module.diag_log_analytics_workspace.log_analytics_workspace_id
 
   # Module Parameters
-
-  private_dns_zone_id        = module.private_dns_zone_avd_host_pool.id
-  private_endpoint_subnet_id = module.subnet_private_endpoint.subnet_id
-  public_network_access      = local.avd_host_public_access
-
+  
   type                             = "Personal"
   load_balancer_type               = "Persistent"
   personal_desktop_assignment_type = "Automatic"
