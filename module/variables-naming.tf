@@ -18,7 +18,7 @@ variable "workload_info" {
     condition     = var.workload_info == "" || can(regex("^[a-z0-9]([a-z0-9-]*[a-z0-9])?$", var.workload_info))
     error_message = "Invalid variable: ${var.workload_info}. Variable name must start with a lowercase letter, end with an alphanumeric lowercase character, and contain only lowercase letters, digits, or a dash (-)."
   }
-  
+
 }
 
 variable "landing_zone_slug" {
