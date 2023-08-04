@@ -38,3 +38,8 @@ variable "stack" {
     error_message = "Invalid variable: ${var.stack}. Variable name must start with a lowercase letter, end with an alphanumeric lowercase character, and contain only lowercase letters, digits, or a dash (-)."
   }
 }
+
+variable "location_short" {
+  description = "Short string for Azure location."
+  type        = string
+}

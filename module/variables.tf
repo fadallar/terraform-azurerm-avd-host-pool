@@ -9,20 +9,6 @@ variable "location" {
   type        = string
 }
 
-variable "location_short" {
-  description = "Short string for Azure location."
-  type        = string
-}
-
-variable "stack" {
-  description = "Project stack name."
-  type        = string
-  validation {
-    condition     = var.stack == "" || can(regex("^[a-z0-9]([a-z0-9-]*[a-z0-9])?$", var.stack))
-    error_message = "Invalid variable: ${var.stack}. Variable name must start with a lowercase letter, end with an alphanumeric lowercase character, and contain only lowercase letters, digits, or a dash (-)."
-  }
-}
-
 variable "friendly_name" {
   type        = string
   description = "A friendly name for the Virtual Desktop Host Pool."
@@ -134,7 +120,6 @@ variable "scheduled_agent_updates_use_session_host_time_zone" {
 }
 
 variable "schedule_agent_updates_schedules" {
-
   default     = []
   description = <<DESC
    schedule - A maximum of two blocks can be added.
@@ -145,9 +130,4 @@ variable "schedule_agent_updates_schedules" {
     day_of_week = string
     hour_of_day = number
   }))
-}
-
-variable "registration_expiration_date" {
-  description = "A valid RFC3339Time for the expiration of the token. example '2022-01-01T23:40:52Z'"
-  type        = string
 }
