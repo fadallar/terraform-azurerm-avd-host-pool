@@ -1,13 +1,15 @@
-# TODO Describe Module Example Test Case
+# AVD Host Pool - Base test case
 
-This is an example for setting-up a an <<DESCRIPTION>>.
-This example
+This is an example for setting-up a an Azure Virtual Desktop Hostpool  
 
+This test case:
 - Sets the different Azure Region representation (location, location_short, location_cli ...) --> module "regions"
 - Instanciates a map object with the common Tags ot be applied to all resources --> module "base_tagging"
-- A resource-group --> module "resource_group"
-- Creates <<DESCRIPTION>> --> module "<<ADD_MODULE_NAME>>"
-- Set the default diagnostics settings (All Logs and metric) whith a Log Analytics workspace as destination
+- Creates the following module dependencies
+    - Resource Group
+    - Log Analytics workspace
+- Creates two Azure Virtual Desktop Hostpool. one of type Pooled and a second of type Personal  
+    - Set the default diagnostics settings (All Logs and metric) whith a the previously configured Log Analytics workspace as destination
 
 <!-- BEGIN_AUTOMATED_TF_DOCS_BLOCK -->
 

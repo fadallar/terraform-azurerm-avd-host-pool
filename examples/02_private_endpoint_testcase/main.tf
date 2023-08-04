@@ -1,6 +1,6 @@
 # Test case local inputs
 locals {
-  stack             = "avdhost"
+  stack             = "avdhost-02"
   landing_zone_slug = "sbx"
   location          = "westeurope"
 
@@ -28,7 +28,6 @@ locals {
 
 
   # AVD Host Pool
-  registration_expiration_date = "2023-08-05T23:40:52Z"
 
   avd_host_friendly_name                   = "my friendly name"
   avd_host_description                     = "my description"
@@ -104,7 +103,7 @@ module "vnet" {
 
 }
 
-module "subnet-private-endpoint" {
+module "subnet_private_endpoint" {
   source = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-subnet//module?ref=develop"
 
   landing_zone_slug   = local.landing_zone_slug
@@ -130,7 +129,7 @@ module "private_dns_zone_avd_host_pool" {
 }
 
 # Please specify source as git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git<<ADD_MODULE_NAME>>//module?ref=master or with specific tag
-module "avdhostpool" {
+module "avdhostpool_pooled" {
   source                          = "../../module"
   landing_zone_slug               = local.landing_zone_slug
   stack                           = local.stack
@@ -144,10 +143,36 @@ module "avdhostpool" {
   # Module Parameters
 
   private_dns_zone_id        = module.private_dns_zone_avd_host_pool.id
-  private_endpoint_subnet_id = module.subnet-private-endpoint.subnet_id
+  private_endpoint_subnet_id = module.subnet_private_endpoint.subnet_id
   public_network_access      = local.avd_host_public_access
 
-  registration_expiration_date = local.registration_expiration_date
+  friendly_name                    = local.avd_host_friendly_name
+  description                      = local.avd_host_description
+  custom_rdp_properties            = local.avd_host_custom_rdp_properties
+  scheduled_agent_updates_enabled  = local.avd_host_scheduled_agent_updates_enabled
+  schedule_agent_updates_schedules = local.avd_host_schedule_agent_updates_schedules
+}
+
+module "avdhostpool_personal" {
+  source                          = "../../module"
+  landing_zone_slug               = local.landing_zone_slug
+  stack                           = local.stack
+  location                        = module.regions.location
+  location_short                  = module.regions.location_short
+  resource_group_name             = module.resource_group.resource_group_name
+  default_tags                    = module.base_tagging.base_tags
+  extra_tags                      = local.extra_tags
+  diag_log_analytics_workspace_id = module.diag_log_analytics_workspace.log_analytics_workspace_id
+
+  # Module Parameters
+
+  private_dns_zone_id        = module.private_dns_zone_avd_host_pool.id
+  private_endpoint_subnet_id = module.subnet_private_endpoint.subnet_id
+  public_network_access      = local.avd_host_public_access
+
+  type                             = "Personal"
+  load_balancer_type               = "Persistent"
+  personal_desktop_assignment_type = "Automatic"
 
   friendly_name                    = local.avd_host_friendly_name
   description                      = local.avd_host_description

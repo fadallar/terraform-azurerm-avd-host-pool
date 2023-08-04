@@ -1,7 +1,9 @@
-# TODO: Add all outputs from outputs.tf file inside module folder
+output "avdhostpool_pooled" {
+  description = "avdhostpool outputs"
+  value       = module.avdhostpool_pooled
+}
 
-output "avdhostpool" {
-  description = "Description"
-  value       = module.avdhostpool
-  sensitive   = true
+output "avdhostpool_personal" {
+  description = "avdhostpool outputs"
+  value       = module.avdhostpool_personal
 }
