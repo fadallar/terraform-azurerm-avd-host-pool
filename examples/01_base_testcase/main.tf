@@ -68,7 +68,7 @@ module "resource_group" {
 }
 
 module "diag_log_analytics_workspace" {
-  source              = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-loganalyticsworkspace//module?ref=feature/use-tf-lock-file"
+  source              = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-loganalyticsworkspace//module?ref=master"
   landing_zone_slug   = local.landing_zone_slug
   stack               = local.stack
   location            = module.regions.location

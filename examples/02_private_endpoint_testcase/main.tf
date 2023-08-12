@@ -1,3 +1,10 @@
+##  Skipping checkov scan not relevant for this module
+##  All below checkov results are related to NSG rules and are not releavnt in this case
+#checkov:skip=CKV_AZURE_77
+#checkov:skip=CKV_AZURE_12
+#checkov:skip=CKV_AZURE_9
+#checkov:skip=CKV_AZURE_10
+
 # Test case local inputs
 locals {
   stack             = "avdhost-02"
@@ -75,7 +82,7 @@ module "resource_group" {
 }
 
 module "diag_log_analytics_workspace" {
-  source = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-loganalyticsworkspace//module?ref=feature/use-tf-lock-file"
+  source = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-loganalyticsworkspace//module?ref=master"
 
   landing_zone_slug   = local.landing_zone_slug
   stack               = local.stack
@@ -87,7 +94,7 @@ module "diag_log_analytics_workspace" {
 }
 
 module "vnet" {
-  source = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-vnet//module?ref=develop"
+  source = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-vnet//module?ref=master" //TO-DO Update when stable version of the module is merged
 
   landing_zone_slug               = local.landing_zone_slug
   stack                           = local.stack
@@ -104,7 +111,7 @@ module "vnet" {
 }
 
 module "subnet_private_endpoint" {
-  source = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-subnet//module?ref=develop"
+  source = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-subnet//module?ref=master" //TO-DO Update when stable version of the module is merged
 
   landing_zone_slug   = local.landing_zone_slug
   stack               = local.stack
@@ -120,7 +127,7 @@ module "subnet_private_endpoint" {
 }
 
 module "private_dns_zone_avd_host_pool" {
-  source = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-privatednszone//module?ref=release/1.0.0"
+  source = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-privatednszone//module?ref=master"
 
   domain_name         = "privatelink.wvd.microsoft.com"
   resource_group_name = module.resource_group.resource_group_name
