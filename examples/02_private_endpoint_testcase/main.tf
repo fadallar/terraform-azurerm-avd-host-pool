@@ -48,12 +48,12 @@ locals {
 }
 
 module "regions" {
-  source       = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-regions//module?ref=master"
+  source       = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-regions//module?ref=master"
   azure_region = local.location
 }
 
 module "base_tagging" {
-  source          = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-basetagging//module?ref=master"
+  source          = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-basetagging//module?ref=master"
   environment     = local.environment
   application     = local.application
   cost_center     = local.cost_center
@@ -66,7 +66,7 @@ module "base_tagging" {
 }
 
 module "resource_group" {
-  source            = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-resourcegroup//module?ref=master"
+  source            = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-resourcegroup//module?ref=master"
   stack             = local.stack
   landing_zone_slug = local.landing_zone_slug
   default_tags      = module.base_tagging.base_tags
@@ -75,7 +75,7 @@ module "resource_group" {
 }
 
 module "diag_log_analytics_workspace" {
-  source = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-loganalyticsworkspace//module?ref=feature/use-tf-lock-file"
+  source = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-loganalyticsworkspace//module?ref=feature/use-tf-lock-file"
 
   landing_zone_slug   = local.landing_zone_slug
   stack               = local.stack
@@ -87,7 +87,7 @@ module "diag_log_analytics_workspace" {
 }
 
 module "vnet" {
-  source = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-vnet//module?ref=develop"
+  source = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-vnet//module?ref=develop"
 
   landing_zone_slug               = local.landing_zone_slug
   stack                           = local.stack
@@ -104,7 +104,7 @@ module "vnet" {
 }
 
 module "subnet_private_endpoint" {
-  source = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-subnet//module?ref=develop"
+  source = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-subnet//module?ref=develop"
 
   landing_zone_slug   = local.landing_zone_slug
   stack               = local.stack
@@ -120,7 +120,7 @@ module "subnet_private_endpoint" {
 }
 
 module "private_dns_zone_avd_host_pool" {
-  source = "git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git/terraform-azurerm-privatednszone//module?ref=release/1.0.0"
+  source = "git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/terraform-azurerm-privatednszone//module?ref=release/1.0.0"
 
   domain_name         = "privatelink.wvd.microsoft.com"
   resource_group_name = module.resource_group.resource_group_name
@@ -128,7 +128,7 @@ module "private_dns_zone_avd_host_pool" {
 
 }
 
-# Please specify source as git::https://ECTL-AZURE@dev.azure.com/ECTL-AZURE/ECTL-Terraform-Modules/_git<<ADD_MODULE_NAME>>//module?ref=master or with specific tag
+# Please specify source as git::ssh://git@ssh.dev.azure.com/v3/ECTL-AZURE/ECTL-Terraform-Modules/<<ADD_MODULE_NAME>>//module?ref=master or with specific tag
 module "avdhostpool_pooled" {
   source                          = "../../module"
   landing_zone_slug               = local.landing_zone_slug
